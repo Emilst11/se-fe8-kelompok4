@@ -40,14 +40,11 @@ function initSnake(color) {
     }
 }
 let snake1 = initSnake("purple");
-
 let apple = [
     {
-        color: "red",
         position: initPosition()
     },
-    {
-        color: "red",
+    { 
         position: initPosition()
     }
 ]
@@ -61,8 +58,6 @@ function drawScore(snake) {
     let scoreCanvas;
     if (snake.color == snake1.color) {
         scoreCanvas = document.getElementById("score1Board");
-    } else {
-        scoreCanvas = document.getElementById("score2Board");
     }
     let scoreCtx = scoreCanvas.getContext("2d");
 
@@ -76,6 +71,7 @@ function draw() {
     setInterval(function() {
         let snakeCanvas = document.getElementById("snakeBoard");
         let ctx = snakeCanvas.getContext("2d");
+        let img = document.getElementById("iconApple");
 
         ctx.clearRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
         
@@ -83,8 +79,10 @@ function draw() {
         for (let i = 1; i < snake1.body.length; i++) {
             drawCell(ctx, snake1.body[i].x, snake1.body[i].y, snake1.color);
         }
-        drawCell(ctx, apple[0].position.x, apple[0].position.y, apple[0].color);
-        drawCell(ctx, apple[1].position.x, apple[1].position.y, apple[1].color);
+        for(let i = 0; i < apple.length; i++){
+            // drawCell(ctx, apple[i].position.x, apple[i].position.y, img);
+            ctx.drawImage(img, apple[i].position.x * CELL_SIZE, apple[i].position.y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
+        }
 
         drawScore(snake1);
     }, REDRAW_INTERVAL);
@@ -153,6 +151,7 @@ function checkCollision(snakes) {
     }
     if (isCollide) {
         alert("Game over");
+        document.getElementById("gameover").play();
         snake1 = initSnake("purple");
     }
     return isCollide;
