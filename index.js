@@ -1,5 +1,5 @@
 const CELL_SIZE = 20;
-const CANVAS_SIZE = 400;
+const CANVAS_SIZE = 500;
 const REDRAW_INTERVAL = 50;
 const WIDTH = CANVAS_SIZE / CELL_SIZE;
 const HEIGHT = CANVAS_SIZE / CELL_SIZE;
@@ -55,16 +55,13 @@ function drawCell(ctx, x, y, color) {
 }
 
 function drawScore(snake) {
-    let scoreCanvas;
-    if (snake.color == snake1.color) {
-        scoreCanvas = document.getElementById("score1Board");
-    }
+    let scoreCanvas = document.getElementById("score1Board");
     let scoreCtx = scoreCanvas.getContext("2d");
 
     scoreCtx.clearRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
-    scoreCtx.font = "30px Arial";
-    scoreCtx.fillStyle = snake.color
-    scoreCtx.fillText(snake.score, 10, scoreCanvas.scrollHeight / 2);
+    scoreCtx.font = "18px Arial";
+    scoreCtx.fillStyle = snake.color;
+    scoreCtx.fillText(snake.score, 20, scoreCanvas.scrollHeight / 2);
 }
 
 function draw() {
@@ -80,10 +77,9 @@ function draw() {
             drawCell(ctx, snake1.body[i].x, snake1.body[i].y, snake1.color);
         }
         for(let i = 0; i < apple.length; i++){
-            // drawCell(ctx, apple[i].position.x, apple[i].position.y, img);
             ctx.drawImage(img, apple[i].position.x * CELL_SIZE, apple[i].position.y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
         }
-
+        // Draw the ellipse
         drawScore(snake1);
     }, REDRAW_INTERVAL);
 }
