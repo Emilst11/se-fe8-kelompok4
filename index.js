@@ -41,10 +41,16 @@ function initSnake(color) {
 }
 let snake1 = initSnake("purple");
 
-let apple = {
-    color: "red",
-    position: initPosition(),
-}
+let apple = [
+    {
+        color: "red",
+        position: initPosition()
+    },
+    {
+        color: "red",
+        position: initPosition()
+    }
+]
 
 function drawCell(ctx, x, y, color) {
     ctx.fillStyle = color;
@@ -77,7 +83,8 @@ function draw() {
         for (let i = 1; i < snake1.body.length; i++) {
             drawCell(ctx, snake1.body[i].x, snake1.body[i].y, snake1.color);
         }
-        drawCell(ctx, apple.position.x, apple.position.y, apple.color);
+        drawCell(ctx, apple[0].position.x, apple[0].position.y, apple[0].color);
+        drawCell(ctx, apple[1].position.x, apple[1].position.y, apple[1].color);
 
         drawScore(snake1);
     }, REDRAW_INTERVAL);
@@ -99,10 +106,12 @@ function teleport(snake) {
 }
 
 function eat(snake, apple) {
-    if (snake.head.x == apple.position.x && snake.head.y == apple.position.y) {
-        apple.position = initPosition();
-        snake.score++;
-        snake.body.push({x: snake.head.x, y: snake.head.y});
+    for(let i = 0; i < apple.length; i++){
+        if (snake.head.x == apple[i].position.x && snake.head.y == apple[i].position.y) {
+            apple[i].position = initPosition();
+            snake.score++;
+            snake.body.push({x: snake.head.x, y: snake.head.y});
+        }
     }
 }
 
